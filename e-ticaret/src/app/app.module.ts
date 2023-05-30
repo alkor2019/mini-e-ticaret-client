@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module';
 import { UiModule } from './ui/ui.module';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,9 +18,14 @@ import { UiModule } from './ui/ui.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     AdminModule,
-    UiModule
+    UiModule,
+    ToastrModule.forRoot(),
+    NgxSpinnerModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide:"baseUrl", useValue:"https://alkor2019-fictional-xylophone-7x79jx4w9gx2wrwj-3000.preview.app.github.dev/api"}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

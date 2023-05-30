@@ -32,11 +32,18 @@
             "styles": [
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/alertifyjs/build/css/alertify.min.css",
+              "./node_modules/alertifyjs/build/css/themes/semantic.min.css",
+              "./node_modules/ngx-toastr/toastr.css",
+              "./node_modules/ngx-spinner/animations/ball-scale-multiple.css",
+              "./node_modules/ngx-spinner/animations/ball-climbing-dot.css",
+              "./node_modules/ngx-spinner/animations/ball-atom.css"
             ],
             "scripts": [
                "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-               "./node_modules/jquery/dist/jquery.min.js"
+               "./node_modules/jquery/dist/jquery.min.js",
+               "./node_modules/alertifyjs/build/alertify.min.js"
             ]
           },
           "configurations": {
@@ -71,7 +78,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "host": "0.0.0.0",
-            "disableHostCheck": true
+            "disableHostCheck": true,
+            "port": 4200
           },
           "configurations": {
             "production": {
