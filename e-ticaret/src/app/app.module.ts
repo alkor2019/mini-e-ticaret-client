@@ -8,10 +8,10 @@ import { UiModule } from './ui/ui.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
-
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -24,7 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    {provide:"baseUrl", useValue:"https://alkor2019-fictional-xylophone-7x79jx4w9gx2wrwj-3000.preview.app.github.dev/api"}
+    {provide:"baseUrl", useValue:"https://3000-krmn28-eticaretbackend-is1nl292h8s.ws-us99.gitpod.io/api"}
   ],
   bootstrap: [AppComponent]
 })

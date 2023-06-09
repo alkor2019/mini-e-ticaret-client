@@ -10,6 +10,11 @@ export class BaseComponent {
               this.ngxSpinner.hide(spinnerTypeName)
              }, delay);
        }
+
+       hideNgxSpinner(spinnerTypeName:SpinnerTypeName = SpinnerTypeName.BallAtom,) 
+       {
+                  this.ngxSpinner.hide(spinnerTypeName)
+       }
 }
 
 

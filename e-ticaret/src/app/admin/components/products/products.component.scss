@@ -1,0 +1,14 @@
+.product-container{
+  width: 100%;
+  height: auto;
+  min-height: 95vh;
+}
+
+.product-container .drawer-left
+{
+    width:28%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}

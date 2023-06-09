@@ -18,7 +18,7 @@ export class HttpClientService {
   {
        let url = "";
        url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint 
-       : `${this.url(requestParamerter)}${id ? `/${id}` : ""}`
+       : `${this.url(requestParamerter)}${id ? `/${id}` : ""}${requestParamerter.queryString ? `?${requestParamerter.queryString}` :""}`
 
        return this.httpClient.get<T>(url, {headers:requestParamerter.headers})
   }
@@ -26,16 +26,14 @@ export class HttpClientService {
   post<T>(requestParamerter:Partial<RequestParamerters>, body:Partial<T>):Observable<T>
   {
     let url = "";
-    url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint 
-    : `${this.url(requestParamerter)}`
+    url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint : `${this.url(requestParamerter)}${requestParamerter.queryString ? `?${requestParamerter.queryString}` :""}`
     return this.httpClient.post<T>(url, body, {headers:requestParamerter.headers})
   }
 
   put<T>(requestParamerter:Partial<RequestParamerters>, body:Partial<T>):Observable<T>
   {
     let url = "";
-    url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint 
-    : `${this.url(requestParamerter)}`
+    url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint : `${this.url(requestParamerter)}${requestParamerter.queryString ? `?${requestParamerter.queryString}` :""}`
     return this.httpClient.put<T>(url, body, {headers:requestParamerter.headers})
   }
   
@@ -54,7 +52,7 @@ export class RequestParamerters {
     controller?:string;
     action?:string;
     headers?:HttpHeaders;
-
+    queryString?:string;
     baseUrl?:string;
     fullEndPoint?:string
 }
