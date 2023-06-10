@@ -1,21 +1,25 @@
 <mat-form-field>
-    <mat-label>Ürün Adı</mat-label>
-    <input matInput>
+    <mat-label >Ürün Adı</mat-label>
+    <input #txtName matInput>
   </mat-form-field>
  
-  <mat-form-field>
+  <mat-form-field >
     <mat-label>Kategori</mat-label>
-    <input matInput>
+    <input #txtCategoryId matInput>
   </mat-form-field>
    
-  <mat-form-field>
+  <mat-form-field >
     <mat-label>Ürün Fiyatı</mat-label>
-    <input matInput>
+    <input #txtPrice matInput>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field >
     <mat-label>Ürün Stok Adedi</mat-label>
-    <input matInput>
+    <input #txtUnitsInStock matInput>
   </mat-form-field>
 
-  <button mat-raised-button color="primary">Ürünü Kaydet</button>
+  <button (click)="create(txtName,
+    txtCategoryId,
+    txtPrice,
+    txtUnitsInStock
+  )" mat-raised-button color="primary">Ürünü Kaydet</button>

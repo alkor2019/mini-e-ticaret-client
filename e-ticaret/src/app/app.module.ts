@@ -24,7 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    {provide:"baseUrl", useValue:"https://3000-krmn28-eticaretbackend-is1nl292h8s.ws-us99.gitpod.io/api"}
+    {provide:"baseUrl", useValue:"https://mrayal-silver-system-6jq6w5955jw3xx79-3000.preview.app.github.dev/api"}
   ],
   bootstrap: [AppComponent]
 })

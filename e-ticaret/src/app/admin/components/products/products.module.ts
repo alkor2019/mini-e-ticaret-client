@@ -9,6 +9,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {MatInputModule} from '@angular/material/input';
     MatSidenavModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     RouterModule.forChild([
       {path:'', component:ProductsComponent}
    ])

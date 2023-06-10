@@ -17,10 +17,9 @@ export class HttpClientService {
   get<T>(requestParamerter:Partial<RequestParamerters>, id?:number):Observable<T>
   {
        let url = "";
-       url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint 
-       : `${this.url(requestParamerter)}${id ? `/${id}` : ""}${requestParamerter.queryString ? `?${requestParamerter.queryString}` :""}`
+       url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint : `${this.url(requestParamerter)}${id ? `/${id}` : ""}${requestParamerter.queryString ? `?${requestParamerter.queryString}` :""}`
 
-       return this.httpClient.get<T>(url, {headers:requestParamerter.headers})
+       return this.httpClient.get<T>(url, {headers: requestParamerter.headers, responseType: requestParamerter.responseType as 'json' })
   }
 
   post<T>(requestParamerter:Partial<RequestParamerters>, body:Partial<T>):Observable<T>
@@ -55,4 +54,5 @@ export class RequestParamerters {
     queryString?:string;
     baseUrl?:string;
     fullEndPoint?:string
+    responseType?: string = 'json';
 }

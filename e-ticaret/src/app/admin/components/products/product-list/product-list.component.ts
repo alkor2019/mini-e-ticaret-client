@@ -31,7 +31,9 @@ export class ProductListComponent extends BaseComponent implements OnInit{
 
   async getProducts()  {
         this.showNgxSpinner(SpinnerTypeName.BallAtom)
-       const data = await this.productService.getProducts(0, 5, () => {
+        let page = this.paginator ? this.paginator.pageIndex : 0;
+        let size = this.paginator ? this.paginator.pageSize : 5;
+       const data = await this.productService.getProducts(page, size, () => {
           // Success function 
           this.hideNgxSpinner(SpinnerTypeName.BallAtom);
        }, (errorMessage)=> {
@@ -44,6 +46,12 @@ export class ProductListComponent extends BaseComponent implements OnInit{
        })
 
        this.dataSource = new MatTableDataSource<ProductList>(data.products)
+       this.paginator.length = data.totalCount;
+   }
+
+   async pageChanged()
+   {
+      await  this.getProducts();
    }
 
 }
