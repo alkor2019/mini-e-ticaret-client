@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerTypeName } from 'src/app/base/base.component';
+import { CategoryList } from 'src/app/contracts/categories/category-list';
 import { Product } from 'src/app/contracts/product';
 import { AlertifyMessageType, AlertifyPosition, CustomAlertifyService } from 'src/app/services/admin/custom-alertify.service';
+import { CategoryService } from 'src/app/services/admin/models/category.service';
 import { ProductService } from 'src/app/services/admin/models/product.service';
 
 @Component({
@@ -10,25 +12,35 @@ import { ProductService } from 'src/app/services/admin/models/product.service';
   templateUrl: './product-create.component.html',
   styleUrls: ['./product-create.component.scss']
 })
-export class ProductCreateComponent extends BaseComponent{
+export class ProductCreateComponent extends BaseComponent implements OnInit{
        @Output() createdProduct: EventEmitter<Product> = new EventEmitter();
+
+       categories:CategoryList[]
+
        constructor(
         spinner:NgxSpinnerService,
         private productService:ProductService,
+        private categoryService:CategoryService,
         private alertify:CustomAlertifyService
         ) {
         super(spinner);
-        
+
+       }
+
+      async ngOnInit() {
+            this.categories = await this.categoryService.getCategories();
+
        }
 
 
-       async create(name:HTMLInputElement, categoryId:HTMLInputElement, price:HTMLInputElement, unitsInStock:HTMLInputElement){
+
+        create(name:HTMLInputElement, slctCategory:any, price:HTMLInputElement, unitsInStock:HTMLInputElement){
              let product = new Product();
              product.name =name.value;
-             product.categoryId = Number(categoryId.value);
+             product.categoryId = Number(slctCategory._value);
              product.price = Number(price.value);
              product.unitsInStock = Number(unitsInStock.value);
-           
+          
              this.showNgxSpinner(SpinnerTypeName.BallAtom)
             this.productService.create(product, ()=>{
                     this.hideNgxSpinner(SpinnerTypeName.BallAtom);
@@ -46,7 +58,7 @@ export class ProductCreateComponent extends BaseComponent{
                       position:AlertifyPosition.TopRight
                    })
             })
-              
-       }      
+
+       }
 
 }

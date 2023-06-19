@@ -2,12 +2,16 @@
     <mat-label >Ürün Adı</mat-label>
     <input #txtName matInput>
   </mat-form-field>
- 
-  <mat-form-field >
-    <mat-label>Kategori</mat-label>
-    <input #txtCategoryId matInput>
+
+  <mat-form-field>
+    <mat-label>Kategori Seç</mat-label>
+    <mat-select #slctCategory >
+      <mat-option  *ngFor="let category of categories" [value]="category.id">
+        {{category.name}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
-   
+
   <mat-form-field >
     <mat-label>Ürün Fiyatı</mat-label>
     <input #txtPrice matInput>
@@ -19,7 +23,7 @@
   </mat-form-field>
 
   <button (click)="create(txtName,
-    txtCategoryId,
+    slctCategory,
     txtPrice,
     txtUnitsInStock
   )" mat-raised-button color="primary">Ürünü Kaydet</button>

@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Product Images   </h2>
+<mat-dialog-content class="mat-typography">
+ <app-file-upload [options]="options" ></app-file-upload>
+ <mat-grid-list  class="product-image-list"  cols="5"  rowHeight="3:3">
+  <mat-grid-tile #gridTitle *ngFor="let image of images">
+    <mat-card  class="product-image-card">
+
+      <img mat-card-image [src]="url + image.path" alt="Photo of a Shiba Inu">
+
+      <mat-card-actions>
+        <button mat-raised-button (click)="deleteImage(image.id, gridTitle)" color="accent">Delete</button>
+      </mat-card-actions>
+     </mat-card>
+  </mat-grid-tile >
+</mat-grid-list>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+

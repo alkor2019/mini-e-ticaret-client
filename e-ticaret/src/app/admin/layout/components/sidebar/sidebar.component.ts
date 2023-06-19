@@ -7,11 +7,11 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
      urls = [
-        {path:'/admin', display:'Dashboard'},
-        {path:'products', display:'Product'},
-        {path:'categories', display:'Category'},
-        {path:'orders', display:'Order'},
-        {path:'customers', display:'Customer'}
+        {path:'/admin', display:'Dashboard', icon:"space_dashboard"},
+        {path:'products', display:'Ürün', icon:'shopping_basket'},
+        {path:'categories', display:'Kategori', icon:'shopping_basket'},
+        {path:'orders', display:'Sipariş', icon:'shopping_basket'},
+        {path:'customers', display:'Müşteri', icon:'shopping_basket'}
 
      ]
 }

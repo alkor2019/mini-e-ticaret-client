@@ -1,5 +1,8 @@
-<ul>
-    <li *ngFor="let url of urls">
-        <a routerLink="{{ url.path }}"> {{ url.display }} </a>
-    </li>
-</ul>
+<mat-list class="list" *ngFor="let url of urls" role="list">
+  <mat-list-item  class="list-item" role="listitem">
+
+    <a routerLinkActive="active-link link" routerLink="{{ url.path }}">
+   
+      {{ url.display }} </a>
+  </mat-list-item>
+</mat-list>

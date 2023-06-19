@@ -35,13 +35,12 @@ export class HttpClientService {
     url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint : `${this.url(requestParamerter)}${requestParamerter.queryString ? `?${requestParamerter.queryString}` :""}`
     return this.httpClient.put<T>(url, body, {headers:requestParamerter.headers})
   }
-  
+
   delete<T>(requestParamerter:Partial<RequestParamerters>, id:number):Observable<T>
   {
     let url = "";
-    url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint 
-    : `${this.url(requestParamerter)}/${id}`
-  
+    url = requestParamerter.fullEndPoint ? requestParamerter.fullEndPoint:`${this.url(requestParamerter)}/${id}${requestParamerter.queryString ? `?${requestParamerter.queryString}` :""}`
+
     return this.httpClient.delete<T>(url, {headers:requestParamerter.headers})
   }
 }

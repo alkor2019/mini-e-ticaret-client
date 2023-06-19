@@ -3,6 +3,8 @@ import { HttpClientService } from '../../common/http-client.service';
 import { ProductList } from 'src/app/contracts/product-list';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Product } from 'src/app/contracts/product';
+import { ProductImageList } from 'src/app/contracts/product-image-list';
+import { Observable, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +14,13 @@ export class ProductService {
   constructor(
     private httpClientService:HttpClientService
   ) { }
-    
-    async create(product:Product, successCbFn?:()=>void, errorCbFn?:(errorMessage:string) => void)
+
+     create(product:Product, successCbFn?:()=>void, errorCbFn?:(errorMessage:string) => void)
     {
           this.httpClientService.post({
              controller:"Products"
           }, product)
-          .subscribe(() => {
+          .subscribe((result) => {
                 successCbFn();
           }, (errorResponse:HttpErrorResponse) =>{
             const _error: Array<{ key: string, value: Array<string> }> = errorResponse.error;
@@ -48,5 +50,28 @@ export class ProductService {
          })
 
         return await  promiseData
+    }
+
+    async readFile(id:number):Promise<ProductImageList[]>
+    {
+         const data:Observable<ProductImageList[]> =
+          this.httpClientService.get<ProductImageList[]>({
+              controller:"Products",
+              action:"GetProductImages"
+          }, id);
+
+          return await firstValueFrom(data)
+    }
+
+    async deleteFile(id:number, imageId:number, successCbFn?:()=> void)
+    {
+        const deletedObservable =this.httpClientService.delete({
+           controller:"Products",
+           action:"DeleteProductImage",
+           queryString:`ImageId=${imageId}`
+         }, id)
+
+         await firstValueFrom(deletedObservable);
+         successCbFn();
     }
 }

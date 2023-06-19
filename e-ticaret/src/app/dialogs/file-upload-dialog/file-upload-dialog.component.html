@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Dikkat !</h1>
+<div mat-dialog-content>
+  <p>Dosyaları kayıt etmek istediğinize emin misiniz?</p>
+ 
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between">
+  <button mat-raised-button color="warn" (click)="onNoClick()">Hayır kayıt etmeyelim</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Evet kayıt edelim</button>
+</div>
