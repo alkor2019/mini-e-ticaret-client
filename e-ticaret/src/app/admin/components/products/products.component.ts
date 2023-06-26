@@ -9,6 +9,8 @@ import { ProductListComponent } from './product-list/product-list.component';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
+
+
 export class ProductsComponent extends BaseComponent implements OnInit {
       
   @ViewChild(ProductListComponent) listComponents: ProductListComponent;

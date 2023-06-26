@@ -1,0 +1,171 @@
+
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+              <h3 class="mb-3">Şimdi Kayıt Olun</h3>
+                <div class="bg-white shadow rounded">
+                    <div class="row">
+                        <div class="col-md-7 pe-0">
+                            <div class="form-left h-100 py-5 px-5">
+                                <form [formGroup]="registerForm" (ngSubmit)="registered(registerForm.value)" class="row g-4">
+                                    <div class="col-12">
+                                        <label for="firstName">Adı<span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                            <input 
+                                            id="firstName"
+                                            formControlName="firstName"
+                                            type="text" 
+                                            class="form-control"
+                                            placeholder="Adınızı giriniz"
+                                            [ngClass]="{
+                                                'is-invalid':
+                                                  registerForm.controls['firstName'].errors &&
+                                                  (registerForm.controls['firstName'].touched ||
+                                                    registerForm.controls['firstName'].dirty),
+                                                'is-valid':
+                                                  !registerForm.controls['firstName'].errors &&
+                                                  (registerForm.controls['firstName'].touched ||
+                                                    registerForm.controls['firstName'].dirty)
+                                              }"
+                                             >
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="lastName">Soyadı<span class="text-danger"> *</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                            <input 
+                                            id="lastName"
+                                            formControlName="lastName"
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Soyadınızı giriniz"
+                                            [ngClass]="{
+                                                'is-invalid':
+                                                  registerForm.controls['lastName'].errors &&
+                                                  (registerForm.controls['lastName'].touched ||
+                                                    registerForm.controls['lastName'].dirty),
+                                                'is-valid':
+                                                  !registerForm.controls['lastName'].errors &&
+                                                  (registerForm.controls['lastName'].touched ||
+                                                    registerForm.controls['lastName'].dirty)
+                                              }"
+                                            >
+                                        </div>
+                                    </div>
+                                        <div class="col-12">
+                                            <label for="userName">Kullanıcı Adı<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                                <input 
+                                                id="userName"
+                                                formControlName="userName"
+                                                type="text" 
+                                                class="form-control" 
+                                                placeholder="Kullanıcı adınızı giriniz"
+                                                [ngClass]="{
+                                                    'is-invalid':
+                                                      registerForm.controls['userName'].errors &&
+                                                      (registerForm.controls['userName'].touched ||
+                                                        registerForm.controls['userName'].dirty),
+                                                    'is-valid':
+                                                      !registerForm.controls['userName'].errors &&
+                                                      (registerForm.controls['userName'].touched ||
+                                                        registerForm.controls['userName'].dirty)
+                                                  }"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="email">Email<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                                <input 
+                                                id="email"
+                                                formControlName="email"
+                                                type="text" 
+                                                class="form-control" 
+                                                placeholder="Email adresinizi giriniz"
+                                                [ngClass]="{
+                                                    'is-invalid':
+                                                      registerForm.controls['email'].errors &&
+                                                      (registerForm.controls['email'].touched ||
+                                                        registerForm.controls['email'].dirty),
+                                                    'is-valid':
+                                                      !registerForm.controls['email'].errors &&
+                                                      (registerForm.controls['email'].touched ||
+                                                        registerForm.controls['email'].dirty)
+                                                  }"
+                                                >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="password">Şifre<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
+                                                <input 
+                                                id="password"
+                                                formControlName="password"
+                                                type="text" 
+                                                class="form-control" 
+                                                placeholder="Şifrenizi giriniz"
+                                                [ngClass]="{
+                                                    'is-invalid':
+                                                      registerForm.controls['password'].errors &&
+                                                      (registerForm.controls['password'].touched ||
+                                                        registerForm.controls['password'].dirty),
+                                                    'is-valid':
+                                                      !registerForm.controls['password'].errors &&
+                                                      (registerForm.controls['password'].touched ||
+                                                        registerForm.controls['password'].dirty)
+                                                  }"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="confirmPassword">Şifre Tekrarı<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
+                                                <input 
+                                                id="confirmPassword"
+                                                formControlName="confirmPassword"
+                                                type="text" 
+                                                class="form-control" 
+                                                placeholder="Şifrenizi doğrulayınız"
+                                                [ngClass]="{
+                                                    'is-invalid':
+                                                      registerForm.controls['confirmPassword'].errors &&
+                                                      (registerForm.controls['confirmPassword'].touched ||
+                                                        registerForm.controls['confirmPassword'].dirty),
+                                                    'is-valid':
+                                                      !registerForm.controls['confirmPassword'].errors &&
+                                                      (registerForm.controls['confirmPassword'].touched ||
+                                                        registerForm.controls['confirmPassword'].dirty  )  
+                                                  }"
+                                                >
+                                          
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a routerLink="/auth/login" class="float-end text-primary">Zaten bir hesabım var</a>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary px-4 float-end mt-4">Kaydet</button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-5 ps-0 d-none d-md-block">
+                            <div class="form-right h-100 bg-primary text-white text-center pt-5">
+                                <i class="bi bi-bootstrap"></i>
+                                <h2 class="fs-1">Welcome Back!!!</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+

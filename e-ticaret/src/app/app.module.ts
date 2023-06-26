@@ -8,6 +8,7 @@ import { UiModule } from './ui/ui.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthModule } from './auth/auth.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,12 +19,13 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     AdminModule,
     UiModule,
+    AuthModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
     HttpClientModule
   ],
   providers: [
-    {provide:"baseUrl", useValue:"https://mrayal-silver-system-6jq6w5955jw3xx79-3000.preview.app.github.dev/api"}
+    {provide:"baseUrl", useValue:"http://localhost:5143/api"}
   ],
   bootstrap: [AppComponent]
 })
