@@ -1,8 +1,8 @@
-export class ProductList {
-    id:number;
-    name:string;
-    categoryId:number;
-    price:number;
-    unitsInStock:number
+import { Product } from "./product"
+
+
+export interface ProductList {
+     products:Product[]
+     totalCount:number
 
 }

@@ -3,8 +3,11 @@ import { HttpClientService } from '../../common/http-client.service';
 import { ProductList } from 'src/app/contracts/product-list';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Product } from 'src/app/contracts/product';
-import { ProductImageList } from 'src/app/contracts/product-image-list';
+import { ProductImage } from 'src/app/contracts/product-image';
 import { Observable, firstValueFrom } from 'rxjs';
+import { ResponseModel } from 'src/app/contracts/responses/response';
+import { MultipleResponseData } from 'src/app/contracts/responses/multiple-response-data';
+import { SingleResponseData } from 'src/app/contracts/responses/single-response-data';
 
 @Injectable({
   providedIn: 'root'
@@ -15,63 +18,63 @@ export class ProductService {
     private httpClientService:HttpClientService
   ) { }
 
-     create(product:Product, successCbFn?:()=>void, errorCbFn?:(errorMessage:string) => void)
+     async create(product:Product, successCbFn?:(message?:string)=>void, errorCbFn?:(errorMessage:string) => void):Promise<void>
     {
-          this.httpClientService.post({
+         
+        const response:Observable<ResponseModel | Product>  =  this.httpClientService.post<ResponseModel | Product> ({
              controller:"Products"
           }, product)
-          .subscribe((result) => {
-                successCbFn();
-          }, (errorResponse:HttpErrorResponse) =>{
-            const _error: Array<{ key: string, value: Array<string> }> = errorResponse.error;
-            let message = "";
-            _error.forEach((v, index) => {
-              v.value.forEach((_v, _index) => {
-                message += `${_v}<hr/>`;
-              });
-            });
-                errorCbFn(message)
-          })
+          
+
+          const result =  await firstValueFrom(response) as ResponseModel
+          if(result.success)
+          {
+               successCbFn && successCbFn(result.message);
+          }
+          else{
+              errorCbFn && errorCbFn(result.message)
+          }
     }
 
-    async getProducts(page:number= 0, size:number = 5, successCbFn?:()=>void, errorCbFn?:(errorMessage:string)=> void): Promise<{totalCount:number; products:ProductList[]}>
+    async getProducts(page:number= 0, size:number = 5, successCbFn?:(message?:string)=>void, errorCbFn?:(errorMessage:string)=> void): Promise<SingleResponseData<ProductList>>
     {
-         const promiseData: Promise<{totalCount:number; products:ProductList[]}>  =  this.httpClientService.get
-        <{totalCount:number; products:ProductList[]}>({
+         const response: Observable<SingleResponseData<ProductList>> = this.httpClientService.get<SingleResponseData<ProductList>>({
               controller:"Products",
               queryString:`Page=${page}&Size=${size}`
-         }).toPromise()
+         });
 
-         promiseData.then(() => {
-              successCbFn();
-         })
-         .catch((errorResponse:HttpErrorResponse)=> {
-                errorCbFn(errorResponse.message)
-         })
-
-        return await  promiseData
+         const result = await firstValueFrom(response) as SingleResponseData<ProductList>
+         if(result. success)
+         {
+             successCbFn &&  successCbFn(result.message)
+             return result;
+         }
+         else {
+              errorCbFn && errorCbFn(result.message)
+              return result;
+         }
     }
 
-    async readFile(id:number):Promise<ProductImageList[]>
+    async readFile(id:number):Promise<MultipleResponseData<ProductImage>>
     {
-         const data:Observable<ProductImageList[]> =
-          this.httpClientService.get<ProductImageList[]>({
+         const response:Observable<MultipleResponseData<ProductImage>> =
+          this.httpClientService.get<MultipleResponseData<ProductImage>>({
               controller:"Products",
               action:"GetProductImages"
           }, id);
 
-          return await firstValueFrom(data)
+          return await firstValueFrom(response)
     }
 
-    async deleteFile(id:number, imageId:number, successCbFn?:()=> void)
+    async deleteFile(id:number, imageId:number, successCbFn?:(message?:string)=> void, errorCbFn?:(message?:string)=> void):Promise<void>
     {
-        const deletedObservable =this.httpClientService.delete({
+        const response:Observable<ResponseModel> = this.httpClientService.delete<ResponseModel>({
            controller:"Products",
            action:"DeleteProductImage",
            queryString:`ImageId=${imageId}`
          }, id)
 
-         await firstValueFrom(deletedObservable);
-         successCbFn();
+        const result = await firstValueFrom(response);
+        result.success ? (successCbFn && successCbFn(result.message)) : (errorCbFn && errorCbFn(result.message))
     }
 }

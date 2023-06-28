@@ -1,4 +1,4 @@
-export class CategoryList
+export class Category
 {
     id:number
     name:string

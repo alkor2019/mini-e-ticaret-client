@@ -1,4 +1,4 @@
-export class ProductImageList{
+export class ProductImage{
      id:number;
      path:string;
      fileName:string;

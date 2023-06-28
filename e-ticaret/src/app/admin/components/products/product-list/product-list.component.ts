@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerTypeName } from 'src/app/base/base.component';
+import { Product } from 'src/app/contracts/product';
 import { ProductList } from 'src/app/contracts/product-list';
 import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { AlertifyMessageType, AlertifyPosition, CustomAlertifyService } from 'src/app/services/admin/custom-alertify.service';
@@ -16,7 +17,7 @@ import { DialogService } from 'src/app/services/common/dialog.service';
 })
 export class ProductListComponent extends BaseComponent implements OnInit{
   displayedColumns: string[] = ['name', 'price', 'unitsInStock', 'categoryId', 'photos', 'edit', 'delete'];
-  dataSource : MatTableDataSource<ProductList> = null;
+  dataSource : MatTableDataSource<Product> = null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -36,7 +37,7 @@ export class ProductListComponent extends BaseComponent implements OnInit{
         this.showNgxSpinner(SpinnerTypeName.BallAtom)
         let page = this.paginator ? this.paginator.pageIndex : 0;
         let size = this.paginator ? this.paginator.pageSize : 5;
-       const data = await this.productService.getProducts(page, size, () => {
+       const result = await this.productService.getProducts(page, size, () => {
           // Success function
           this.hideNgxSpinner(SpinnerTypeName.BallAtom);
        }, (errorMessage)=> {
@@ -48,8 +49,8 @@ export class ProductListComponent extends BaseComponent implements OnInit{
              this.hideNgxSpinner(SpinnerTypeName.BallAtom);
        })
     
-       this.dataSource = new MatTableDataSource<ProductList>(data.products)
-       this.paginator.length = data.totalCount;
+       this.dataSource = new MatTableDataSource<Product>(result.data.products)
+       this.paginator.length = result.data.totalCount;
    }
 
    async pageChanged()
