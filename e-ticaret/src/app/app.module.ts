@@ -8,7 +8,8 @@ import { UiModule } from './ui/ui.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@auth0/angular-jwt'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,10 +20,15 @@ import { AuthModule } from './auth/auth.module';
     AppRoutingModule,
     AdminModule,
     UiModule,
-    AuthModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem("accessToken"),
+        allowedDomains: ["localhost:5143"]
+      },
+    }),
   ],
   providers: [
     {provide:"baseUrl", useValue:"http://localhost:5143/api"}

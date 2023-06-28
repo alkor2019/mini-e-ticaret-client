@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerTypeName } from 'src/app/base/base.component';
-import { CategoryList } from 'src/app/contracts/categories/category-list';
+import { Category } from 'src/app/contracts/categories/category';
 import { Product } from 'src/app/contracts/product';
 import { AlertifyMessageType, AlertifyPosition, CustomAlertifyService } from 'src/app/services/admin/custom-alertify.service';
 import { CategoryService } from 'src/app/services/admin/models/category.service';
@@ -15,7 +15,7 @@ import { ProductService } from 'src/app/services/admin/models/product.service';
 export class ProductCreateComponent extends BaseComponent implements OnInit{
        @Output() createdProduct: EventEmitter<Product> = new EventEmitter();
 
-       categories:CategoryList[]
+       categories:Category[]
 
        constructor(
         spinner:NgxSpinnerService,
@@ -28,7 +28,7 @@ export class ProductCreateComponent extends BaseComponent implements OnInit{
        }
 
       async ngOnInit() {
-            this.categories = await this.categoryService.getCategories();
+            this.categories = await (await this.categoryService.getCategories()).data;
 
        }
 

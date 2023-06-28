@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
          this.ngxService.show(SpinnerTypeName.BallAtom);
          const result =   await this.userService.createUser(user)
          console.log(result)
-         if(result.succeeded)
+         if(result.success)
           {
             this.ngxService.hide(SpinnerTypeName.BallAtom);
                 this.toastr.toastInit(result.message, "Kayıt İşlemi", {

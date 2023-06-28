@@ -3,7 +3,7 @@ import { BaseDialog } from '../base/base-dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FileUploadOptions } from 'src/app/services/common/file-upload/file-upload.component';
 import { ProductService } from 'src/app/services/admin/models/product.service';
-import { ProductImageList } from 'src/app/contracts/product-image-list';
+import { ProductImage } from 'src/app/contracts/product-image';
 import { AlertifyMessageType, AlertifyPosition, CustomAlertifyService } from 'src/app/services/admin/custom-alertify.service';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { DeleteDialogComponent, DeleteState } from '../delete-dialog/delete-dialog.component';
@@ -31,7 +31,7 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
        }
 
        url:string
-       images:ProductImageList[]
+       images:ProductImage[]
 
       constructor(
         @Inject("baseUrl") private  baseUrl:string,
@@ -48,8 +48,8 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
       }
 
       async ngOnInit(): Promise<void> {
-            this.images = await this.productService.readFile(this.data as number)
-            console.log(this.images)
+            this.images = await (await this.productService.readFile(this.data as number)).data
+          
             this.url = this.baseUrl.replace("/api", "/")
 
        }
@@ -65,10 +65,10 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
                  },
                  afterClosedFn:async () =>{
                   this.ngxSpinner.show(SpinnerTypeName.BallAtom)
-                  await this.productService.deleteFile(this.data as number, imageId, () =>{
+                  await this.productService.deleteFile(this.data as number, imageId, (message) =>{
                           this.ngxSpinner.hide(SpinnerTypeName.BallAtom)
                           $(cardElement._element.nativeElement).fadeOut(900, ()=> {
-                            this.alertify.notify("Resim silidi", {
+                            this.alertify.notify(message, {
                               messageType:AlertifyMessageType.Warning,
                               dismissOther:true,
                               position:AlertifyPosition.TopRight
