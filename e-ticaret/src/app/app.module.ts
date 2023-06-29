@@ -45,7 +45,7 @@ import { LoginComponent } from './ui/components/login/login.component';
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('281851454258-c3ik3s54sre97mt0miolhhc9kbmtdl9a.apps.googleusercontent.com')
+            provider: new GoogleLoginProvider('')
           }
         ],
         onError: (err) => {
