@@ -9,8 +9,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt'
-import { GoogleLoginProvider, GoogleSigninButtonModule, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider, GoogleSigninButtonModule, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { LoginComponent } from './ui/components/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LoginComponent } from './ui/components/login/login.component';
     AdminModule,
     GoogleSigninButtonModule,
     UiModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
     HttpClientModule,
@@ -46,6 +48,10 @@ import { LoginComponent } from './ui/components/login/login.component';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider('')
+          },
+          {
+             id:FacebookLoginProvider.PROVIDER_ID,
+             provider: new FacebookLoginProvider('')
           }
         ],
         onError: (err) => {

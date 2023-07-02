@@ -1,5 +1,14 @@
+import { SocialUser } from '@abacritt/angularx-social-login';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { firstValueFrom, Observable } from 'rxjs';
+import { SpinnerTypeName } from 'src/app/base/base.component';
+import { SingleResponseData } from 'src/app/contracts/responses/single-response-data';
+import { Token } from 'src/app/contracts/users/token';
+import { UserLogin } from 'src/app/contracts/users/user-login';
+import { CustomToastrService, ToastMessageType, ToastPosition } from '../ui/custom-toastr.service';
+import { AuthenticationService } from './authentication.service';
+import { HttpClientService } from './http-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,28 +16,73 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
 
   constructor(
-    private jwtHelper:JwtHelperService
+    private httpClientService:HttpClientService,
+    private toastService:CustomToastrService,
+    private ngxSpinner:NgxSpinnerService,
+    
   ) { }
 
-  identityCheck()
-  {
+  
+    async internalLogin(user:UserLogin, callbackFn?:()=> void):Promise<void>
+    {
+        this.ngxSpinner.show(SpinnerTypeName.BallAtom)
+        const response:Observable<SingleResponseData<Token> | UserLogin> = this.httpClientService.post<SingleResponseData<Token> | UserLogin>({
+          controller:'Auth',
+          action:'Login'
+        }, user)
+
+        var result = await firstValueFrom(response) as SingleResponseData<Token>;
+        await this.loginAction(result, ()=> callbackFn());
+        this.ngxSpinner.hide(SpinnerTypeName.BallAtom)
+    }
+
+
+
+    async externalLogin(user:SocialUser, isErrorSignOutFn:()=> void, callbackFn?:() => void):Promise<void>
+    {
+         
+        
+         this.ngxSpinner.show(SpinnerTypeName.BallAtom)
+         const response : Observable<SingleResponseData<Token> | SocialUser> = this.httpClientService.post<SingleResponseData<Token> | SocialUser>({
+           controller:'Auth',
+           action:`${user.provider}-login`.toLocaleLowerCase()
+         }, user)
+ 
+         let result = await firstValueFrom(response) as SingleResponseData<Token>;
+         let actionResult =   await this.loginAction(result, () => callbackFn());
+         if(!actionResult.success) 
+         {
+             isErrorSignOutFn()
+         }
+          this.ngxSpinner.hide(SpinnerTypeName.BallAtom)
+    }
+
+       
+
+
+
+  private async loginAction(result: SingleResponseData<Token>, callbackFn?:() => void):Promise<SingleResponseData<Token>> {
+        if (result.success) {
+          localStorage.setItem("accessToken", result.data.accessToken);
+          this.toastService.toastInit(result.message, "Başarılı giriş işlemi", {
+              messageType:ToastMessageType.Success,
+              position:ToastPosition.TopRight,
+            
+            })
+
+        }
+        else {
+            this.toastService.toastInit(result.message, "Başarısız giriş işlemi", {
+              messageType:ToastMessageType.Error,
+              position:ToastPosition.TopRight,
+            
+            })
+        }
+        //this.authenticationService.identityCheck();
+        callbackFn()
+        return result;
+  }
+
    
-      const token: string = localStorage.getItem("accessToken");
-      let expired:boolean;
-      try {
-          expired = this.jwtHelper.isTokenExpired(token);
-      } catch  {
-          expired = true;
-      }
-
-      _isAuthenticated = token != null && !expired;
-  }
-
-
-
-  get isAuthenticated():boolean
-  {
-     return _isAuthenticated;
-  }
+     
 }
-export let _isAuthenticated:boolean

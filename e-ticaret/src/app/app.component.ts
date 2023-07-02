@@ -2,6 +2,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/common/auth.service';
+import { AuthenticationService } from './services/common/authentication.service';
 import { CustomToastrService, ToastMessageType, ToastPosition } from './services/ui/custom-toastr.service';
 declare var $:any
 @Component({
@@ -13,23 +14,24 @@ declare var $:any
 export class AppComponent {
 
   constructor(
-     public authService:AuthService,
+     public authenticationService:AuthenticationService,
      private toastrService:CustomToastrService,
      private router:Router,
      private socialAuthSerivce:SocialAuthService
     
   ) {
-    authService.identityCheck();
+    authenticationService.identityCheck();
    
   }
  
 
   logOut()
   {
-  
        localStorage.removeItem('accessToken');
-       this.socialAuthSerivce.signOut()
-       this.authService.identityCheck();
+       this.socialAuthSerivce.authState.subscribe(user => {
+          user !=null && this.socialAuthSerivce.signOut();
+       })
+       this.authenticationService.identityCheck();
        this.router.navigate([""])
        this.toastrService.toastInit("Oturumunuz kapatılmıştır", "Oturum Kapatma",{
           messageType:ToastMessageType.Warning,

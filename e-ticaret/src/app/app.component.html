@@ -15,17 +15,17 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="baskets">Sepet</a>
         </li>
-        <li *ngIf="authService.isAuthenticated" class="nav-item">
+        <li *ngIf="authenticationService.isAuthenticated" class="nav-item">
           <a class="nav-link" routerLink="admin">Yönetim Paneli</a>
         </li>
       </ul>
       <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       </form> -->
-       <div *ngIf="authService.isAuthenticated" class="text-end">
+       <div *ngIf="authenticationService.isAuthenticated" class="text-end">
           <a (click)="logOut()" class="btn btn-outline-danger"  >Çıkış Yap</a>
        </div>
-      <div *ngIf="!authService.isAuthenticated" class="text-end">
+      <div *ngIf="!authenticationService.isAuthenticated" class="text-end">
         <a routerLink="login" type="button" class="btn btn-outline-success me-2">Login</a>
         <a routerLink="register" type="button" class="btn btn-success">Sign-up</a>
       </div>

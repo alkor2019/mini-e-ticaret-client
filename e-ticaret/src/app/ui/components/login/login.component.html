@@ -6,12 +6,29 @@
                     <div class="row">
                         <div class="col-md-7 pe-0">
                             <div class="form-left h-100 py-5 px-5">
-                                <div  class="row g-4">
+                                <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)"  su class="row g-4">
                                         <div class="col-12">
                                             <label>Kullanıcı Adı veya Email<span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
-                                                <input #txtUserNameOrEmail type="text" class="form-control" placeholder="Kullanıcı adı veya email adresinizi giriniz">
+                                                <input 
+                                              
+                                                type="text" 
+                                                id="userNameOrEmail" 
+                                                class="form-control" 
+                                                formControlName="userNameOrEmail"
+                                                placeholder="Kullanıcı adı veya email adresinizi giriniz"
+                                                [ngClass]="{
+                                                    'is-invalid':
+                                                      loginForm.controls['userNameOrEmail'].errors &&
+                                                      (loginForm.controls['userNameOrEmail'].touched ||
+                                                        loginForm.controls['userNameOrEmail'].dirty),
+                                                    'is-valid':
+                                                      !loginForm.controls['userNameOrEmail'].errors &&
+                                                      (loginForm.controls['userNameOrEmail'].touched ||
+                                                        loginForm.controls['userNameOrEmail'].dirty)
+                                                  }"
+                                                >
                                             </div>
                                         </div>
 
@@ -19,14 +36,36 @@
                                             <label>Şifre<span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
-                                                <input type="text" #txtPassword class="form-control" placeholder="Şifrenizi giriniz">
+                                                <input 
+                                                type="password"
+                                                id="password-input"
+                                                class="form-control"
+                                                formControlName="password"
+                                                placeholder="Şifrenizi giriniz"
+                                                [ngClass]="{
+                                                    'is-invalid':
+                                                      loginForm.controls['password' ].errors &&
+                                                      (loginForm.controls['password'].touched ||
+                                                        loginForm.controls['password'].dirty),
+                                                    'is-valid':
+                                                      !loginForm.controls['password'].errors &&
+                                                      (loginForm.controls['password'].touched ||
+                                                        loginForm.controls['password'].dirty)
+                                                  }"
+                                                 >
                                             </div>
                                         </div> 
+                                        <div class="col-12 d-flex justify-content-center my-4">
+                                            <button  class="btn btn-primary px-4  mt-4 w-75">Giriş Yap</button>
+                                        </div>
                                          <div class="col-md-12 my-3 ">
-                                              <h2 class="mb-3 text-center" >Giriş Yap</h2>
+                                              <h2 class="mb-3 text-center" >Veya</h2>
                                              <div class="w-100 d-flex justify-content-around">
                                                 <asl-google-signin-button  type='standard' theme="filled_blue" size='medium'></asl-google-signin-button>
-                                                
+                                          
+                                                <button type="button" (click)="facebookLogin()" class="btn btn-primary  p-1 facebook-btn">
+                                                    <i class="bi bi-facebook p-1 bg-white text-primary"></i> <small  style="margin-left: 8px; font-weight: 400;" >Facebook ile giriş yap</small>
+                                                </button>
                                              </div>
                                          </div>
                                         <div class="col-sm-6">
@@ -40,10 +79,8 @@
                                             <a href="#" class="float-end text-primary">Forgot Password?</a>
                                         </div>
 
-                                        <div class="col-12">
-                                            <button  (click)="login(txtUserNameOrEmail.value, txtPassword.value)" class="btn btn-primary px-4 float-end mt-4">login</button>
-                                        </div>
-                                    </div>
+                                        
+                                    </form>
 
                             </div>
                         </div>

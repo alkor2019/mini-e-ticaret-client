@@ -10,9 +10,12 @@ export class CustomToastrService {
 
    toastInit(message:string, title:string, options:Partial<ToastOptions>)
    {
+       
         this.toastrService[options.messageType](message, title, {
            positionClass:options.position
+          
         })
+      this.toastrService.toastrConfig.preventDuplicates = true;
    }
 
 }
