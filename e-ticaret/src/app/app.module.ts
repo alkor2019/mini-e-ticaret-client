@@ -48,7 +48,7 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('281851454258-c3ik3s54sre97mt0miolhhc9kbmtdl9a.apps.googleusercontent.com')
+            provider: new GoogleLoginProvider('')
           },
           {
              id:FacebookLoginProvider.PROVIDER_ID,
