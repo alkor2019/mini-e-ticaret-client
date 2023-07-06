@@ -19,6 +19,7 @@ export class AuthService {
     private httpClientService:HttpClientService,
     private toastService:CustomToastrService,
     private ngxSpinner:NgxSpinnerService,
+    private authenticationService:AuthenticationService
     
   ) { }
 
@@ -34,6 +35,23 @@ export class AuthService {
         var result = await firstValueFrom(response) as SingleResponseData<Token>;
         await this.loginAction(result, ()=> callbackFn());
         this.ngxSpinner.hide(SpinnerTypeName.BallAtom)
+    }
+
+    async refreshTokenLogin(refreshToken:string)
+    {
+      this.ngxSpinner.show(SpinnerTypeName.BallAtom)
+      const response:Observable<SingleResponseData<Token> | any> = this.httpClientService.post<SingleResponseData<Token> | any>({
+        controller:'Auth',
+        action:'RefreshTokenLogin'
+      }, {refreshToken:refreshToken})
+
+      var result = await firstValueFrom(response) as SingleResponseData<Token>;
+      if(result.success)
+      {
+           localStorage.setItem("accessToken", result.data.accessToken)
+           localStorage.setItem("refreshToken", result.data.refreshToken)
+      }
+      this.ngxSpinner.hide(SpinnerTypeName.BallAtom)
     }
 
 
@@ -64,6 +82,7 @@ export class AuthService {
   private async loginAction(result: SingleResponseData<Token>, callbackFn?:() => void):Promise<SingleResponseData<Token>> {
         if (result.success) {
           localStorage.setItem("accessToken", result.data.accessToken);
+          localStorage.setItem("refreshToken", result.data.refreshToken)
           this.toastService.toastInit(result.message, "Başarılı giriş işlemi", {
               messageType:ToastMessageType.Success,
               position:ToastPosition.TopRight,
@@ -78,7 +97,7 @@ export class AuthService {
             
             })
         }
-        //this.authenticationService.identityCheck();
+        this.authenticationService.identityCheck();
         callbackFn()
         return result;
   }

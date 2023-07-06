@@ -9,7 +9,7 @@ export const AuthGuard: CanActivateFn = (route:ActivatedRouteSnapshot, state:Rou
   const router:Router = inject(Router);
   const toastr:CustomToastrService = inject(CustomToastrService);
   const socialAuthService:SocialAuthService = inject(SocialAuthService)
-  inject(AuthenticationService).identityCheck()
+  //inject(AuthenticationService).identityCheck()
    
   if(!_isAuthenticated)
   {

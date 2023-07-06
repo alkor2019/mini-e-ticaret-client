@@ -7,11 +7,12 @@ import { AdminModule } from './admin/admin.module';
 import { UiModule } from './ui/ui.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt'
 import { FacebookLoginProvider, GoogleLoginProvider, GoogleSigninButtonModule, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { LoginComponent } from './ui/components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('')
+            provider: new GoogleLoginProvider('281851454258-c3ik3s54sre97mt0miolhhc9kbmtdl9a.apps.googleusercontent.com')
           },
           {
              id:FacebookLoginProvider.PROVIDER_ID,
@@ -58,7 +59,8 @@ import { ReactiveFormsModule } from '@angular/forms';
           console.error(err);
         }
       } as SocialAuthServiceConfig,
-    }
+    },
+    {provide:HTTP_INTERCEPTORS, useClass:HttpErrorInterceptor, multi:true}
   ],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
